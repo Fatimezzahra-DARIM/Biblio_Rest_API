@@ -10,8 +10,28 @@ use App\Models\Type;
 class Book extends Model
 {
     use HasFactory;
-
-    public function types(){
-        return $this->belongsToMany(Type::class);
+    protected $fillable = [
+        'title',
+        'author',
+        'isbn',
+        'content',
+        'publication_Date',
+        'number_of_pages',
+        'location',
+        'Status',
+        'type_id',
+        'collection_id',
+        'user_id',
+    ];
+    protected $hidden =[
+        'created_at',
+        'updated_at',
+    ];
+    public function type(){
+        return $this->belongsTo(Type::class);
+    }
+    public function collection()
+    {
+        return $this->belongsTo(Collection::class);
     }
 }

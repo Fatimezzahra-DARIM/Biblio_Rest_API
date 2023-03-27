@@ -4,10 +4,14 @@ namespace App\Http\Controllers;
 
 use Exception;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Tymon\JWTAuth\Validators\Validator;
+
 
 class UserController extends Controller
 {
@@ -124,6 +128,7 @@ class UserController extends Controller
             'newPassword' => 'required',
             'confirmPassword' => 'required|same:newPassword',
         ]);
+        // dd($request);
         //    echo  Hash::make($validated['oldPassword']);
         //    echo '<hr>'. Auth::user()->password;
         if (Hash::check($validated['oldPassword'], Auth::user()->password)) {
@@ -134,7 +139,10 @@ class UserController extends Controller
         }
 
         return response()->json($user, 400);
+        // return response()->json(['hi'=>'hi']);
     }
+
+ 
 
     /**
      * Remove the specified resource from storage.

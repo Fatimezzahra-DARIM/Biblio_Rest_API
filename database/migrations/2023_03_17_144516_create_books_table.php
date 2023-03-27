@@ -21,8 +21,8 @@ return new class extends Migration
             $table->integer('number_of_pages');
             $table->string('location');
             $table->string('Status');
-            $table->foreignId('type_id')->constrained()->onDelete('cascade');
-            $table->foreignId('collection_id')->constrained()->onDelete('cascade');
+            $table->foreignId('type_id')->constrained('types')->onDelete('cascade');
+            $table->foreignId('collection_id')->constrained('collections')->onDelete('cascade');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
 

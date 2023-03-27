@@ -10,9 +10,24 @@ class Type extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name'
+    ];
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+    ];
 
-    public function Books()
+    // public function Books()
+    // {
+    //     return $this->belongsToMany(Book::class);
+    // }
+    public function user()
     {
-        return $this->belongsToMany(Book::class);
+        return $this->belongsTo(User::class);
+    }
+    public function type()
+    {
+        return $this->hasMany(Type::class);
     }
 }

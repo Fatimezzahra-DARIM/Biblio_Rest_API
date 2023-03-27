@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Collection extends Model
+class Role extends Model
 {
     use HasFactory;
     protected $fillable = [
@@ -15,8 +15,8 @@ class Collection extends Model
         'created_at',
         'updated_at',
     ];
-    public function book()
+    public function user()
     {
-        return $this->hasMany(Book::class);
+        return $this->hasMany(User::class);
     }
 }
