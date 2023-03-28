@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -33,21 +34,30 @@ Route::group([
     Route::post('me', [AuthController::class,'me']);
     Route::post('reset-password', [AuthController::class,'resetPassword']);
     Route::post('reset', [AuthController::class, 'reset']);
+    Route::get('book/{request}', [BookController::class, 'show']);
+    Route::get('book/', [BookController::class, 'index']);
 });
-
-// Route::apiResource('user',UserController::class);
-
 
 Route::controller(UserController::class)->group(function () {
     Route::patch('user/update/{id}','update' );
     Route::put('user/updatePassword', 'updatePassword');
 
 });
-Route::apiResource('Type', TypesController::class);
-Route::apiResource('Book', BookController::class);
-Route::put('role/{id}', [RoleController::class, 'role']);
 
-// Route::patch('/profil/{id}', [ProfilController::class, 'update']);
-// Route::patch('user/update/{id}', [UserController::class, 'update'] );
-// Route::patch('/users/{id}', 'UserController@update');
+Route::group([
+    'middleware' => ['api', 'is_admin'],
+    'prefix' => 'admin',
+], function () {
+    Route::apiResource('Type', TypesController::class);
+    Route::apiResource('Book/admin', AdminController::class);
 
+    Route::put('role/{id}', [RoleController::class, 'role']);
+    // Route::delete('Book/{id}', [AdminController::class, 'destroy']);
+    // Route::put('Book/{id}', [AdminController::class, 'update']);
+});
+Route::group([
+    'middleware' => ['api', 'recep'],
+    'prefix' => 'recep',
+], function () {
+    Route::apiResource('Book', BookController::class);
+});
